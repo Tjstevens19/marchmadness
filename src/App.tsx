@@ -2,12 +2,18 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 
 interface TeamProperties {
-  // Define the School Name, Mascot Name, and Location (City, State) properties of the team using the json file C:\Users\tdogs\OneDrive\Desktop\Mission_9_Stevens\marchmadness\src\CollegeBasketballTeams.json
+  // Define the School Name, Mascot Name, and Location (City, State) properties of the team using the json file
+  // C:\Users\tdogs\OneDrive\Desktop\Mission_9_Stevens\marchmadness\src\CollegeBasketballTeams.json
+  school: string;
   name: string;
   mascot: string;
   city: string;
   state: string;
 }
+
+// const teamData: TeamProperties[] = require('./CollegeBasketballTeams.json');
+const teamData: TeamProperties[] =
+  require('./CollegeBasketballTeams.json').teams;
 
 function Welcome() {
   return <h1>Welcome to March Madness</h1>;
@@ -15,47 +21,45 @@ function Welcome() {
 
 class TeamCard extends React.Component<TeamProperties> {
   render() {
-    const { name, mascot, city, state } = this.props;
+    const { school, name, city, state } = this.props;
 
     return (
       <div>
-        <img alt={`${name} Logo`} />
-        <h2>Team Name: {name}</h2>
-        <h3>Mascot: {mascot}</h3>
+        <h2>School Name: {school}</h2>
+        <h3>Mascot: {name}</h3>
         <p>
-          City: {city} State: {state}
+          Location: {city}, {state}
         </p>
       </div>
     );
   }
 }
 
+// function TeamList() {
+//   return (
+//     <div>
+//       {teamData.map((teamNum) => (
+//         <Team {...teamNum} />
+//       ))}
+//     </div>
+//   );
+// }
+
+function TeamList() {
+  return (
+    <div>
+      {teamData.map((team, index) => (
+        <TeamCard key={index} {...team} />
+      ))}
+    </div>
+  );
+}
+
 function App() {
-  const [teamData, setTeamData] = useState<TeamProperties[]>([]);
-
-  useEffect(() => {
-    // Fetch data from the JSON file
-    const fetchData = async () => {
-      try {
-        const response = await fetch('/path/to/CollegeBasketballTeams.json');
-        const data = await response.json();
-        setTeamData(data.teams);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
   return (
     <div className="App">
       <Welcome />
-      <div>
-        {teamData.map((team, index) => (
-          <TeamCard key={index} {...team} />
-        ))}
-      </div>
+      <TeamList />
     </div>
   );
 }
