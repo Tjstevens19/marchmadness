@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 
 interface TeamProperties {
-  // Define the School Name, Mascot Name, and Location (City, State) properties of the team using the json file
-  // C:\Users\tdogs\OneDrive\Desktop\Mission_9_Stevens\marchmadness\src\CollegeBasketballTeams.json
   school: string;
   name: string;
   mascot: string;
@@ -11,12 +9,16 @@ interface TeamProperties {
   state: string;
 }
 
-// const teamData: TeamProperties[] = require('./CollegeBasketballTeams.json');
 const teamData: TeamProperties[] =
   require('./CollegeBasketballTeams.json').teams;
 
 function Welcome() {
-  return <h1>Welcome to March Madness</h1>;
+  return (
+    <div>
+      <h1>Welcome to March Madness</h1>
+      <p>Here are the teams participating in the tournament:</p>
+    </div>
+  );
 }
 
 class TeamCard extends React.Component<TeamProperties> {
@@ -34,16 +36,6 @@ class TeamCard extends React.Component<TeamProperties> {
     );
   }
 }
-
-// function TeamList() {
-//   return (
-//     <div>
-//       {teamData.map((teamNum) => (
-//         <Team {...teamNum} />
-//       ))}
-//     </div>
-//   );
-// }
 
 function TeamList() {
   return (
